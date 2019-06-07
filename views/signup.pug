@@ -1,0 +1,32 @@
+extends layouts/main
+
+block body
+  if errorMessage
+    .alert.alert-danger(role='alert', style='margin: 30px 0 ;') #{errorMessage}
+  form.form-signin.needs-validation(action='/signup', method='POST', style='width: 100%;' novalidate)
+      .text-center.mb-4
+        h1.h3.mb-3.font-weight-normal Sign Up
+      .form-label-group
+        label(for='inputName') Name
+        input.form-control(type='text', name='name', placeholder='Name', required='', autofocus='', id='name')
+        div(class="invalid-feedback") Name is required
+      .form-label-group
+        label(for='inputEmail') Email
+        input.form-control(type='email', name='email', placeholder='Email', required='', autofocus='', id='email')
+        div(class="invalid-feedback") Please enter a valid email address
+      .form-label-group
+        label(for='inputPassword') Password
+        input.form-control(type='password', name='password', placeholder='Password',id='password', required='')
+        div(class="invalid-feedback") Password is required
+      .form-label-group
+        label(for='inputPasswordCheck') Password Check
+        input.form-control(type='password', name='passwordCheck', placeholder='Password Check',id='password-check', required='')
+        div(class="invalid-feedback") please confirm your password again
+      br
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') Submit
+      .text-center.mb-4.mt-4
+        p
+          a(href='/signin') Sign In
+      p.mt-5.mb-3.text-muted.text-center © 2017-2018
+append script
+  script(src="/javascripts/signupValidation.js")
