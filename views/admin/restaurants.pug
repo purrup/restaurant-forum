@@ -1,5 +1,29 @@
 extends ../layouts/main
 
 block body
-  div
-    p admin restaurants
+  h1 餐廳後台
+  a(href='/admin/restaurants/create')
+    button.btn.btn-primary(type='button') New Restaurant
+    br
+    br
+    table.table
+      thead.thead-dark
+        tr
+          th(scope='col') #
+          th(scope='col') Name
+          th(scope='col') #
+      tbody
+          for restaurant in restaurants
+            tr
+              th.pt-3(scope='row') #{restaurant.id}
+              td.pt-3 #{restaurant.name}
+              td
+                button.btn.btn-link(type='button')
+                  a(href='/admin/restaurants/#{restaurant.id}')
+                    | Show
+                button.btn.btn-link(type='button')
+                  a(href='/admin/restaurants/#{restaurant.id}/edit')
+                    | Edit
+                form(action='/admin/restaurants/#{restaurant.id}?_method=DELETE', method='POST', style='display: inline;')
+                  button.btn.btn-link(type='submit') Delete
+

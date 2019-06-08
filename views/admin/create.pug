@@ -1,0 +1,20 @@
+extends ../layouts/main
+
+block body
+  form(action='/admin/restaurants', method='POST')
+    .form-group
+      label(for='name') Name
+      input#name.form-control(type='text', name='name', placeholder='Enter name')
+    .form-group
+      label(for='tel') Tel
+      input#tel.form-control(type='text', name='tel', placeholder='Enter tel')
+    .form-group
+      label(for='address') Address
+      input#address.form-control(type='text', name='address', placeholder='Enter address')
+    .form-group
+      label(for='opening_hours') Opening Hours
+      input#opening_hours.form-control(type='time', name='opening_hours', placeholder='Enter opening_hours')
+    .form-group
+      label(for='description') Description
+      textarea#description.form-control(name='description', rows='3')
+    button.btn.btn-primary(type='submit') Submit

@@ -1,6 +1,6 @@
 let restController = {
   getRestaurants: (req, res) => {
-    return res.render('restaurants', { user: req.user })
+    return res.render('restaurants')
   },
 }
 module.exports = restController

@@ -12,10 +12,10 @@ html(lang="en")
         #navbarsExampleDefault.navbar-collapse.offcanvas-collapse
           ul.navbar-nav.mr-auto
           div
-            //- if user.isAdmin
-              //- a(href='/admin', style='color: white;margin-right: 10px;') Admin 後台
+            if userAdmin = true
+              a(href='/admin', style='color: white;margin-right: 10px;') Admin 後台
 
-            if (user)
+            if user
               span(style='color: white;margin-right: 10px;') Hi, #{user.name}
               a(href='/users/#{user.id}', style='color: white;margin-right: 10px;') Profile
               a(href='/logout')
