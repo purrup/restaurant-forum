@@ -1,9 +1,7 @@
 extends layouts/main
 
 block body
-  if errorMessage
-    .alert.alert-danger(role='alert', style='margin: 30px 0 ;') #{errorMessage}
-  form.form-signin.needs-validation(action='/signup', method='POST', style='width: 100%;' novalidate)
+  form.form-signup.needs-validation(action='/signup', method='POST', style='width: 100%;' novalidate)
       .text-center.mb-4
         h1.h3.mb-3.font-weight-normal Sign Up
       .form-label-group
@@ -29,4 +27,4 @@ block body
           a(href='/signin') Sign In
       p.mt-5.mb-3.text-muted.text-center © 2017-2018
 append script
-  script(src="/javascripts/signupValidation.js")
+  script(src="/javascripts/signUpValidation.js")

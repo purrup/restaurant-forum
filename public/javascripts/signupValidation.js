@@ -1,4 +1,4 @@
-const form = document.querySelector('.form-signin')
+const form = document.querySelector('.form-signup')
 const name = document.querySelector('#name')
 const email = document.querySelector('#email')
 const emailFeedback = document.querySelector('#email~.invalid-feedback')
@@ -8,7 +8,7 @@ const passwordCheck = document.querySelector('#password-check')
 const passwordCheckFeedback = document.querySelector(
   '#password-check~.invalid-feedback'
 )
-let errorMessage = ''
+// let errorMessage = ''
 
 form.addEventListener('submit', event => {
   event.preventDefault()
@@ -23,7 +23,6 @@ form.addEventListener('submit', event => {
       passwordCheck.classList.add('is-invalid')
       return
     }
-
     signUp()
   }
 })
@@ -34,7 +33,6 @@ async function signUp() {
     userData.name = name.value
     userData.email = email.value
     userData.password = password.value
-    console.log('test', JSON.stringify(userData))
 
     const response = await axios('/signup', {
       method: 'POST',
@@ -45,8 +43,7 @@ async function signUp() {
       email.classList.add('is-invalid')
       emailFeedback.innerHTML = response.data.msg
     } else {
-      // form.submit()
-      window.location('/signin')
+      window.location = '/signin'
     }
   } catch (error) {
     console.error(error)

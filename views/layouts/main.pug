@@ -10,12 +10,9 @@ html(lang="en")
       main(role='main')
         .album.py-5.bg-light
           .container
-            //- if success_messages
-            //-   .alert.alert-success(role='alert', style='margin: 30px 0 ;')
-            //-     #{success_messages}
-            //- if error_messages
-            //-   .alert.alert-danger(role='alert', style='margin: 30px 0 ;')
-            //-     #{error_messages}
+            - var messages = {error_messages:`${error_messages}`,success_messages:`${success_messages}`}
+              if messages.error_messages
+                .alert.alert-danger(role='alert', style='margin: 30px 0 ;') #{messages.error_messages}
             block body
             block script
               script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const path = require('path')
+const passport = require('./config/passport')
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, '/views'))
@@ -14,6 +15,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -27,4 +30,4 @@ app.listen(port, () => {
 })
 
 // 引入 routes 並將 app 傳進去，讓 routes 可以用 app 這個物件來指定路由
-require('./routes')(app)
+require('./routes')(app, passport)
