@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.1",
+    "method-override": "^3.0.0",
     "mysql2": "^1.6.5",
     "node": "^12.4.0",
     "nodemon": "^1.19.1",
