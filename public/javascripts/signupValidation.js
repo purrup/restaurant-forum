@@ -8,7 +8,6 @@ const passwordCheck = document.querySelector('#password-check')
 const passwordCheckFeedback = document.querySelector(
   '#password-check~.invalid-feedback'
 )
-// let errorMessage = ''
 
 form.addEventListener('submit', event => {
   event.preventDefault()
@@ -23,34 +22,35 @@ form.addEventListener('submit', event => {
       passwordCheck.classList.add('is-invalid')
       return
     }
-    signUp()
+    // signUp()
+    form.submit()
   }
 })
 
-async function signUp() {
-  try {
-    let userData = new Object()
-    userData.name = name.value
-    userData.email = email.value
-    userData.password = password.value
+// async function signUp() {
+//   try {
+//     let userData = new Object()
+//     userData.name = name.value
+//     userData.email = email.value
+//     userData.password = password.value
 
-    const response = await axios('/signup', {
-      method: 'POST',
-      data: userData,
-    })
-    // email有註冊過
-    if (response.data.msg) {
-      email.classList.add('is-invalid')
-      emailFeedback.innerHTML = response.data.msg
+//     const response = await axios('/signup', {
+//       method: 'POST',
+//       data: userData,
+//     })
+//     // email有註冊過
+//     if (response.data.msg) {
+//       email.classList.add('is-invalid')
+//       emailFeedback.innerHTML = response.data.msg
 
-      return
-    } else {
-      window.location = '/signin'
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
+//       return
+//     } else {
+//       window.location = response.data.redirect
+//     }
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 form.addEventListener('input', e => {
   if (e.target.matches('.is-invalid')) {

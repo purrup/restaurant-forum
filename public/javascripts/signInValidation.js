@@ -11,7 +11,7 @@ form.addEventListener('submit', event => {
   } else {
     // 如果表單驗證有過，移除.was-validated
     form.classList.remove('was-validated')
-    window.location = '/'
+    form.submit()
   }
 })
 
