@@ -1,21 +1,22 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
-let message = { error: '', success: '' }
 
 let userController = {
   signUpPage: (req, res) => {
-    return res.render('signup')
+    return res.render('signup', {
+      error_messages: req.flash('error_messages'),
+    })
   },
 
   signUp: (req, res) => {
     // confirm unique user
     User.findOne({ where: { email: req.body.email } }).then(user => {
       if (user) {
-        message.error = '信箱已經註冊過！'
-        console.log(message)
-        req.flash('error_messages', '信箱已經註冊過！')
         res.send({ msg: '信箱已經註冊過！' })
+        return res.redirect('/signup', {
+          error_messages: req.flash('error_messages', '信箱已經註冊過！'),
+        })
       } else {
         User.create({
           name: req.body.name,
