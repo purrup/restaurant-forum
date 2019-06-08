@@ -32,5 +32,12 @@ const adminController = {
       res.redirect('/admin/restaurants')
     })
   },
+  getRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id).then(restaurant => {
+      return res.render('admin/restaurant', {
+        restaurant: restaurant,
+      })
+    })
+  },
 }
 module.exports = adminController

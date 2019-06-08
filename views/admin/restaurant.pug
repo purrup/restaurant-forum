@@ -1,0 +1,26 @@
+extends ../layouts/main
+
+block body
+    .row
+    .col-md-12
+      h1 #{restaurant.name}
+    .col-md-4
+      br
+      .well
+        ul.list-unstyled
+          li
+            strong Opening Hour:
+            |  #{restaurant.opening_hours}
+          li
+            strong Tel:
+            |  #{restaurant.tel}
+          li
+            strong Address:
+            |  #{restaurant.address}
+    .col-md-8
+      p #{restaurant.description}
+    hr
+    hr
+    br
+    br
+    a(href='javascript:history.back()') 回上一頁
