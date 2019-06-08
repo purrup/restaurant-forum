@@ -14,9 +14,7 @@ let userController = {
     User.findOne({ where: { email: req.body.email } }).then(user => {
       if (user) {
         res.send({ msg: '信箱已經註冊過！' })
-        return res.redirect('/signup', {
-          error_messages: req.flash('error_messages', '信箱已經註冊過！'),
-        })
+        req.flash('error_messages', '信箱已經註冊過！')
       } else {
         User.create({
           name: req.body.name,
@@ -28,7 +26,6 @@ let userController = {
           ),
         }).then(user => {
           req.flash('success_messages', '成功註冊帳號！')
-          message.success = '成功註冊帳號！'
           return res.redirect('/signin')
         })
       }

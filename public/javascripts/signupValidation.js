@@ -42,7 +42,8 @@ async function signUp() {
     if (response.data.msg) {
       email.classList.add('is-invalid')
       emailFeedback.innerHTML = response.data.msg
-      window.location = response.data.redirect
+
+      return
     } else {
       window.location = '/signin'
     }
