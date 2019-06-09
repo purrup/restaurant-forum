@@ -10,6 +10,7 @@ const passport = require('./config/passport')
 const methodOverride = require('method-override')
 
 app.use('/', express.static(path.join(__dirname, 'public')))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'pug')
 app.use(bodyParser.json())

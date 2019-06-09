@@ -2,7 +2,7 @@ extends ../layouts/main
 
 block body
   if mode === 'edit'
-    form(action=`/admin/restaurants/${restaurant.id}?_method=PUT`, method='POST')
+    form(action=`/admin/restaurants/${restaurant.id}?_method=PUT`, method='POST', enctype='multipart/form-data')
       .form-group
         label(for='name') Name
         input#name.form-control(type='text', name='name', placeholder='Enter name', value=`${restaurant.name}`)
@@ -18,27 +18,37 @@ block body
       .form-group
         label(for='description') Description
         textarea#description.form-control(name='description', rows='3') #{restaurant.description}
+      .form-group.pb-5.pt-2
+        label(for='image') Image
+        input#image.form-control-file(type='file', name='image')
       button.btn.btn-primary(type='submit') Submit
       a(href='/admin/restaurants')
         button.btn.btn-primary.ml-5(type='button') Back
-        
+
+
+      
+
   else if mode === 'create'
-    form(action='/admin/restaurants', method='POST')
+    form(action='/admin/restaurants', method='POST',enctype='multipart/form-data')
       .form-group
         label(for='name') Name
-        input#name.form-control(type='text', name='name', placeholder='Enter name', value=`${restaurant.name}`)
+        input#name.form-control(type='text', name='name', placeholder='Enter name')
       .form-group
         label(for='tel') Tel
-        input#tel.form-control(type='text', name='tel', placeholder='Enter tel', value=`${restaurant.tel}`)
+        input#tel.form-control(type='text', name='tel', placeholder='Enter tel')
       .form-group
         label(for='address') Address
-        input#address.form-control(type='text', name='address', placeholder='Enter address', value=`${restaurant.address}`)
+        input#address.form-control(type='text', name='address', placeholder='Enter address')
       .form-group
         label(for='opening_hours') Opening Hours
-        input#opening_hours.form-control(type='time', name='opening_hours', placeholder='Enter opening_hours', value=`${restaurant.opening_hours}`)
+        input#opening_hours.form-control(type='time', name='opening_hours', placeholder='Enter opening_hours')
       .form-group
         label(for='description') Description
-        textarea#description.form-control(name='description', rows='3') #{restaurant.description}
+        textarea#description.form-control(name='description', rows='3')
+      .form-group.pb-5.pt-2
+        label(for='image') Image
+        input#image.form-control-file(type='file', name='image')
       button.btn.btn-primary(type='submit') Submit
       a(href='/admin/restaurants')
         button.btn.btn-primary.ml-5(type='button') Back
+

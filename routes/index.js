@@ -1,6 +1,8 @@
 const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -37,6 +39,7 @@ module.exports = (app, passport) => {
   )
   app.post(
     '/admin/restaurants',
+    upload.single('image'),
     authenticatedAdmin,
     adminController.postRestaurant
   )
@@ -55,6 +58,7 @@ module.exports = (app, passport) => {
 
   app.put(
     '/admin/restaurants/:id',
+    upload.single('image'),
     authenticatedAdmin,
     adminController.putRestaurant
   )
