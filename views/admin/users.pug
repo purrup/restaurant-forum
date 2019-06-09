@@ -1,0 +1,33 @@
+extends ../layouts/main
+
+block body
+  h1 餐廳後台
+  a.badge.badge-secondary.p-2(href='/admin/restaurants') Restaurants 
+  a.ml-4.badge.badge-secondary.p-2(href='/admin/users') Users
+  br
+  br
+  table.table
+    thead.thead-dark
+      tr
+        th(scope='col') #
+        th(scope='col') Email
+        th(scope='col') Role
+        th(scope='col') Change Authority
+      tbody
+        each user in users
+          tr
+            th.pt-3(scope='row') #{user.id}
+            th.pt-3(scope='row') #{user.email}
+            case user.isAdmin
+              when true
+                th.pt-3(scope='row') admin
+                td
+                  form(action=`/admin/users/${user.id}?_method=PUT`, method='POST', style='display: inline;')
+                    button.btn.btn-link(type='submit', data-id=`${user.id}`)
+                      | set as user
+              when false
+                th.pt-3(scope='row') user
+                td
+                  form(action=`/admin/users/${user.id}?_method=PUT`, method='POST', style='display: inline;')
+                    button.btn.btn-link(type='submit', data-id=`${user.id}`)
+                      | set as admin

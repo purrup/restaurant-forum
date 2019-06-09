@@ -3,6 +3,8 @@ const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const Restaurant = db.Restaurant
+const User = db.User
+
 let mode = ''
 
 const adminController = {
@@ -126,6 +128,25 @@ const adminController = {
       restaurant.destroy().then(restaurant => {
         res.redirect('/admin/restaurants')
       })
+    })
+  },
+  editUser: (req, res) => {
+    return User.findAll().then(users => {
+      return res.render('admin/users', {
+        users,
+      })
+    })
+  },
+  putUser: (req, res) => {
+    return User.findByPk(req.params.id).then(user => {
+      user
+        .update({
+          isAdmin: !user.isAdmin,
+        })
+        .then(user => {
+          req.flash('success_messages', 'Authority was successfully to change!')
+          res.redirect('/admin/users')
+        })
     })
   },
 }
