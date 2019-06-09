@@ -22,6 +22,7 @@ let userController = {
             bcrypt.genSaltSync(10),
             null
           ),
+          isAdmin: false,
         }).then(user => {
           req.flash('success_messages', '成功註冊帳號！')
           res.redirect('/signin')
