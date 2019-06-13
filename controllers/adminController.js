@@ -18,8 +18,10 @@ const adminController = {
   },
 
   createRestaurant: (req, res) => {
-    mode = 'create'
-    return res.render('admin/create', { mode })
+    Category.findAll().then(categories => {
+      mode = 'create'
+      return res.render('admin/create', { mode, categories })
+    })
   },
 
   postRestaurant: (req, res) => {
@@ -39,6 +41,7 @@ const adminController = {
           opening_hours: req.body.opening_hours,
           description: req.body.description,
           image: file ? img.data.link : null,
+          CategoryId: req.body.categoryId,
         }).then(restaurant => {
           req.flash('success_messages', 'restaurant was successfully created')
           return res.redirect('/admin/restaurants')
@@ -52,6 +55,7 @@ const adminController = {
         opening_hours: req.body.opening_hours,
         description: req.body.description,
         image: null,
+        CategoryId: req.body.categoryId,
       }).then(restaurant => {
         req.flash('success_messages', 'restaurant was successfully created')
         return res.redirect('/admin/restaurants')
@@ -71,8 +75,10 @@ const adminController = {
 
   editRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id).then(restaurant => {
-      mode = 'edit'
-      return res.render('admin/create', { restaurant, mode })
+      Category.findAll().then(categories => {
+        mode = 'edit'
+        return res.render('admin/create', { restaurant, mode, categories })
+      })
     })
   },
 
@@ -95,6 +101,7 @@ const adminController = {
               opening_hours: req.body.opening_hours,
               description: req.body.description,
               image: file ? img.data.link : restaurant.image,
+              CategoryId: req.body.categoryId,
             })
             .then(restaurant => {
               req.flash(
@@ -115,6 +122,7 @@ const adminController = {
             opening_hours: req.body.opening_hours,
             description: req.body.description,
             image: restaurant.image,
+            CategoryId: req.body.categoryId,
           })
           .then(restaurant => {
             req.flash(

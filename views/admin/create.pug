@@ -7,6 +7,14 @@ block body
         label(for='name') Name
         input#name.form-control(type='text', name='name', placeholder='Enter name', value=`${restaurant.name}`)
       .form-group
+        label(for='categoryId') Category
+        select#categoryId.form-control(name='categoryId')
+          each category in categories
+            if category.id === restaurant.CategoryId
+              option(value=`${category.id}` selected) #{category.name}
+            else
+              option(value=`${category.id}`) #{category.name}
+      .form-group
         label(for='tel') Tel
         input#tel.form-control(type='text', name='tel', placeholder='Enter tel', value=`${restaurant.tel}`)
       .form-group
@@ -33,6 +41,11 @@ block body
       .form-group
         label(for='name') Name
         input#name.form-control(type='text', name='name', placeholder='Enter name')
+      .form-group
+        label(for='categoryId') Category
+        select#categoryId.form-control(name='categoryId')
+          each category in categories
+            option(value=`${category.id}`) #{category.name}
       .form-group
         label(for='tel') Tel
         input#tel.form-control(type='text', name='tel', placeholder='Enter tel')
