@@ -15,12 +15,14 @@ block body
       tr
         th(scope='col') #
         th(scope='col') Name
+        th(scope='col') Category
         th(scope='col') #
     tbody
         for restaurant in restaurants
           tr
             th.pt-3(scope='row') #{restaurant.id}
             td.pt-3 #{restaurant.name}
+            td.pt-3 #{restaurant.Category.name}
             td
               button.btn.btn-link(type='button')
                 a(href=`/admin/restaurants/${restaurant.id}`)
