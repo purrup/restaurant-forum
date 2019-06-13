@@ -1,0 +1,31 @@
+extends ../layouts/main
+
+block body
+  h1 餐廳後台
+  a.badge.badge-secondary.p-2(href='/admin/restaurants') Restaurants 
+  a.ml-4.badge.badge-secondary.p-2(href='/admin/categories') Categories
+  a.ml-4.badge.badge-secondary.p-2(href='/admin/users') Users
+  br
+  br
+  div.d-flex.align-items-center.p-3.my-3.text-white-50.bg-purple.rounded.shadow-sm
+    form(action='/admin/categories' method='POST')
+      input(type='text' name='name' placeholder='name')
+      button.ml-2(type='submit') Submit
+  table.table
+    thead.thead-dark
+      tr
+        th(scope='col') #
+        th(scope='col') Category Name
+        th(scope='col') #
+    tbody
+        for category in categories
+          tr
+            th.pt-3(scope='row') #{category.id}
+            td.pt-3 #{category.name}
+            td
+              button.btn.btn-link(type='button')
+                a(href=`/admin/categories/${category.id}`)
+                  | Edit
+              form(action=`/admin/categories/${category.id}?_method=DELETE`, method='POST', style='display: inline;')
+                button.btn.btn-link(type='submit') Delete
+
