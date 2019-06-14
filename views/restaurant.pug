@@ -1,0 +1,23 @@
+extends layouts/main
+
+block body
+  .row
+    .col-md-12
+      h1 #{restaurant.name}
+      h4 [#{restaurant.Category.name}]
+    .col-md-4
+      img.img-responsive.center-block(src=`${restaurant.image}`, style='width: 250px;margin-bottom: 25px;')
+      .well
+        ul.list-unstyled
+          li
+            strong Opening Hour: #{restaurant.opening_hours}
+          li
+            strong Tel: #{restaurant.tel}
+          li
+            strong Address: #{restaurant.address}
+    .col-md-8
+      p #{restaurant.description}
+    hr
+  br
+  br
+  a(href='javascript:history.back()') 回上一頁

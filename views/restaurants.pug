@@ -8,8 +8,7 @@ block body
           img.card-img-top(src=`${restaurant.image}`, alt='Card image cap', width='286px', height='180px')
           .card-body
             p.card-text
-              a(href='/restaurants/{{this.id}}')
-                | #{restaurant.name}
+              a(href=`/restaurants/${restaurant.id}`) #{restaurant.name}
             span.badge.badge-secondary #{restaurant.Category.name}
             p.card-text #{restaurant.description}
   br

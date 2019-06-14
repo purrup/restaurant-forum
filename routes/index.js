@@ -99,6 +99,8 @@ module.exports = (app, passport) => {
     categoryController.deleteCategory
   )
 
+  app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+
   app.get('/admin/users', authenticatedAdmin, adminController.editUser)
   app.put('/admin/users/:id', authenticatedAdmin, adminController.putUser)
 
