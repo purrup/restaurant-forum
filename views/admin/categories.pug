@@ -8,9 +8,15 @@ block body
   br
   br
   div.d-flex.align-items-center.p-3.my-3.text-white-50.bg-purple.rounded.shadow-sm
-    form(action='/admin/categories' method='POST')
-      input(type='text' name='name' placeholder='name')
-      button.ml-2(type='submit') Submit
+    if category
+      form(action=`/admin/categories/${category.id}?_method=PUT`, method='POST')
+        input(type='text', placeholder='name', name='name', value=`${category.name}`)
+        button.ml-2(type='submit') Update
+        a.ml-2(href='/admin/categories') or Create New
+    else 
+      form(action='/admin/categories' method='POST')
+        input(type='text' name='name' placeholder='name')
+        button.ml-2(type='submit') Submit
   table.table
     thead.thead-dark
       tr
