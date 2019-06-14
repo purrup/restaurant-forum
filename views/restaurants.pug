@@ -1,5 +1,17 @@
 extends layouts/main
 
 block body
-  div
-    p restaurants
+  .row
+    each restaurant in restaurants
+      .col-md-4
+        .card.mb-4.shadow-sm
+          img.card-img-top(src=`${restaurant.image}`, alt='Card image cap', width='286px', height='180px')
+          .card-body
+            p.card-text
+              a(href='/restaurants/{{this.id}}')
+                | #{restaurant.name}
+            span.badge.badge-secondary #{restaurant.Category.name}
+            p.card-text #{restaurant.description}
+  br
+  br
+

@@ -58,7 +58,7 @@ module.exports = {
         tel: faker.phone.phoneNumber(),
         address: faker.address.streetAddress(),
         opening_hours: '08:00',
-        image: faker.image.imageUrl(),
+        image: 'https://picsum.photos/640/480',
         description: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date(),
