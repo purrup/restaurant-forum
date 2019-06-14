@@ -1,6 +1,22 @@
 extends layouts/main
 
 block body
+  ul.nav.nav-pills.mb-3
+    li.nav-item
+    if !categoryId
+      a.nav-link.active(href='?categoryId=') 全部
+      each category in categories
+        li.nav-item
+        a.nav-link(href=`?categoryId=${category.id}`) #{category.name}
+    else
+      a.nav-link(href='?categoryId=') 全部
+      each category in categories
+        if category.id === categoryId
+          li.nav-item
+          a.nav-link.active(href=`?categoryId=${category.id}`) #{category.name}
+        else
+          li.nav-item
+          a.nav-link(href=`?categoryId=${category.id}`) #{category.name}
   .row
     each restaurant in restaurants
       .col-md-4
