@@ -1,6 +1,9 @@
 const db = require('../models')
+const moment = require('moment')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const Comment = db.Comment
+const User = db.User
 const pageLimit = 10
 
 let restController = {
@@ -49,12 +52,21 @@ let restController = {
   },
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, {
-      include: Category,
+      include: [Category, { model: Comment, include: [User] }],
     }).then(restaurant => {
+      let createTime = getCreateTimeFromNow(
+        restaurant.Comments[0].dataValues.createdAt
+      )
       return res.render('restaurant', {
         restaurant: restaurant,
+        createTime: createTime,
       })
     })
   },
 }
+
+function getCreateTimeFromNow(createdAt) {
+  return moment(createdAt).fromNow()
+}
+
 module.exports = restController
