@@ -23,11 +23,15 @@ block body
 
   h3 所有評論：
   each comment in restaurant.Comments
+    if user.isAdmin
+      form(action=`/comments/${comment.id}?_method=DELETE`, method='POST', style='float: right;')
+        button.btn.btn-danger(type='submit') Delete
+
     blockquote.blockquote.mb-0
       h4
         a(href=`/users/${comment.User.id}`) #{comment.User.name}
       p #{comment.text}
-      footer.blockquote-footer #{createTime}
+      footer.blockquote-footer #{getCreateTimeFromNow(comment.createdAt)}
   hr
 
   form(action='/comments', method='POST')
@@ -41,3 +45,4 @@ block body
     br
   a(href='javascript:history.back()') 回上一頁
   
+

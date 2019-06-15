@@ -5,6 +5,7 @@ const Category = db.Category
 const Comment = db.Comment
 const User = db.User
 const pageLimit = 10
+const getCreateTimeFromNow = createdAt => moment(createdAt).fromNow()
 
 let restController = {
   getRestaurants: (req, res) => {
@@ -54,19 +55,11 @@ let restController = {
     return Restaurant.findByPk(req.params.id, {
       include: [Category, { model: Comment, include: [User] }],
     }).then(restaurant => {
-      let createTime = getCreateTimeFromNow(
-        restaurant.Comments[0].dataValues.createdAt
-      )
       return res.render('restaurant', {
         restaurant: restaurant,
-        createTime: createTime,
+        getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
       })
     })
   },
 }
-
-function getCreateTimeFromNow(createdAt) {
-  return moment(createdAt).fromNow()
-}
-
 module.exports = restController
