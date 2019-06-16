@@ -10,5 +10,21 @@ block body
     .col-md-8.my-3
       h3 #{user.name}
       h5.my-4 #{user.email}
+      h3 已評論 #{restaurants.length} 間餐廳
+      br
+      br
       a(href=`/users/${user.id}/edit`)
         button.btn.btn-primary(type='button') edit
+  br
+  br
+  .card.border
+    h5.card-header 已評論 #{restaurants.length} 間餐廳
+    .d-flex.flex.row.justify-content-star.mx-3
+      each restaurant in restaurants
+        a(href=`/restaurants/${restaurant.id}`)
+          img.m-3(src=`${restaurant.image}`, style='height: 100px; width: 100px;')
+
+
+    
+    
+    
