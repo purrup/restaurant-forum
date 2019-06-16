@@ -3,6 +3,8 @@ const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 let userController = {
   signUpPage: (req, res) => {
@@ -49,8 +51,25 @@ let userController = {
   },
 
   getUser: (req, res) => {
-    User.findByPk(req.params.id).then(user => {
-      return res.render('user', { user })
+    //透過userId找到對應的comments，再把Restaurant include進comments
+    return User.findByPk(req.params.id, {
+      include: [{ model: Comment, include: [Restaurant] }],
+    }).then(user => {
+      let restaurants = []
+      // 把每個Restaurant放進restaurants這個arr以便前端存取
+      user.Comments.forEach(comment => {
+        restaurants.push(comment.Restaurant)
+      })
+      //建立set容器
+      const set = new Set()
+      //如果item.id沒有在set裡(true)，就加進set裡，且filter會把return true的內容（也就是restaurant）回傳進results
+      const results = restaurants.filter(item =>
+        !set.has(item.id) ? set.add(item.id) : false
+      )
+      return res.render('user', {
+        user,
+        restaurants: results,
+      })
     })
   },
   editUser: (req, res) => {
