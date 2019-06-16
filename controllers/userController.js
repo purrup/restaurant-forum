@@ -57,7 +57,7 @@ let userController = {
     }).then(user => {
       let restaurants = []
       // 把每個Restaurant放進restaurants這個arr以便前端存取
-      user.Comments.forEach(comment => {
+      user.Comments.map(comment => {
         restaurants.push(comment.Restaurant)
       })
       //建立set容器
