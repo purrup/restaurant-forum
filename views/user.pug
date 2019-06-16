@@ -1,0 +1,14 @@
+extends layouts/main
+
+block body
+  br
+  br
+  .row.bg-white.rounded.shadow-sm
+    .col-md-4.my-3
+      img.img-responsive.center-block(src=`${user.image}`, style='width: 100%;')
+
+    .col-md-8.my-3
+      h3 #{user.name}
+      h5.my-4 #{user.email}
+      a(href=`/users/${user.id}/edit`)
+        button.btn.btn-primary(type='button') edit
