@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const imgur = require('imgur-node-api')
+const uniqBy = require('lodash.uniqby')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const User = db.User
 const Comment = db.Comment
@@ -57,7 +58,7 @@ let userController = {
     }).then(user => {
       let restaurants = []
       // 把每個Restaurant放進restaurants這個arr以便前端存取
-      user.Comments.map(comment => {
+      user.Comments.forEach(comment => {
         restaurants.push(comment.Restaurant)
       })
       //建立set容器
@@ -67,14 +68,14 @@ let userController = {
         !set.has(item.id) ? set.add(item.id) : false
       )
       return res.render('user', {
-        user,
+        profile: user,
         restaurants: results,
       })
     })
   },
   editUser: (req, res) => {
     User.findByPk(req.params.id).then(user => {
-      return res.render('editUser', { user })
+      return res.render('editUser', { profile: user })
     })
   },
 

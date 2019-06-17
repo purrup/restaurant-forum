@@ -5,12 +5,12 @@ block body
   br
   .row.bg-white.rounded.shadow-sm
     .col-md-4.my-3
-      img.img-responsive.center-block(src=`${user.image}`, style='width: 100%;')
+      img.img-responsive.center-block(src=`${profile.image}`, style='width: 100%;')
     .col-md-8.my-3
-      form(action=`/users/${user.id}?_method=PUT`, method='POST', enctype='multipart/form-data')
+      form(action=`/users/${profile.id}?_method=PUT`, method='POST', enctype='multipart/form-data')
         .form-group
           label(for='name') Name
-          input#name.form-control(type='text', name='name', placeholder='Enter name', value=`${user.name}`)
+          input#name.form-control(type='text', name='name', placeholder='Enter name', value=`${profile.name}`)
         .form-group
           label(for='image') Image
           input#image.form-control-file(type='file', name='image')

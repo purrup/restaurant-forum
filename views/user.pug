@@ -5,15 +5,15 @@ block body
   br
   .row.bg-white.rounded.shadow-sm
     .col-md-4.my-3
-      img.img-responsive.center-block(src=`${user.image}`, style='width: 100%;')
+      img.img-responsive.center-block(src=`${profile.image}`, style='width: 100%;')
 
     .col-md-8.my-3
-      h3 #{user.name}
-      h5.my-4 #{user.email}
+      h3 #{profile.name}
+      h5.my-4 #{profile.email}
       h3 已評論 #{restaurants.length} 間餐廳
       br
       br
-      a(href=`/users/${user.id}/edit`)
+      a(href=`/users/${profile.id}/edit`)
         button.btn.btn-primary(type='button') edit
   br
   br
