@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const imgur = require('imgur-node-api')
-const uniqBy = require('lodash.uniqby')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const User = db.User
 const Comment = db.Comment
