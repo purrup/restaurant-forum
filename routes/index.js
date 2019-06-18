@@ -102,6 +102,11 @@ module.exports = (app, passport) => {
 
   app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+  app.get(
+    '/restaurant/:id/dashboard',
+    authenticated,
+    restController.getDashboard
+  )
 
   app.post('/comments', authenticated, commentController.postComment)
   app.delete(

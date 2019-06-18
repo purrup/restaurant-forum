@@ -17,6 +17,9 @@ block body
             strong Address: #{restaurant.address}
     .col-md-8
       p #{restaurant.description}
+      br
+      a(href=`/restaurant/${restaurant.id}/dashboard`)
+        button.btn.btn-md.btn-primary(type='button') Dashboard
     hr
   br
   br

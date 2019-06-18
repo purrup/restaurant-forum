@@ -79,5 +79,15 @@ let restController = {
       getCreateTimeFromNow: getCreateTimeFromNow,
     })
   },
+  getDashboard: async (req, res) => {
+    const restaurant = await Restaurant.findByPk(req.params.id, {
+      include: [Category, Comment],
+    })
+    console.log(restaurant.name)
+    console.log(restaurant.Category.name)
+    console.log(restaurant.Comments[0])
+    console.log(restaurant.Comments.length)
+    res.render('restaurantDashboard', { restaurant })
+  },
 }
 module.exports = restController
