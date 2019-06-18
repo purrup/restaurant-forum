@@ -51,6 +51,8 @@ let userController = {
   },
 
   getUser: (req, res) => {
+    console.log('user.id : ', req.user.id)
+    console.log('req.params.id : ', req.params.id)
     //透過userId找到對應的comments，再把Restaurant include進comments
     return User.findByPk(req.params.id, {
       include: [{ model: Comment, include: [Restaurant] }],

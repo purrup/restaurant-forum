@@ -1,6 +1,13 @@
 extends layouts/main
 
 block body
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link.active(href='/restaurants') 首頁
+    li.nav-item
+      a.nav-link(href='/restaurants/feeds') 最新動態
+  br
+  br
   ul.nav.nav-pills.mb-3
     li.nav-item
     if !categoryId
