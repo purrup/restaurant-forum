@@ -55,10 +55,17 @@ let restController = {
     return Restaurant.findByPk(req.params.id, {
       include: [Category, { model: Comment, include: [User] }],
     }).then(restaurant => {
-      return res.render('restaurant', {
-        restaurant: restaurant,
-        getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
-      })
+      restaurant
+        // 更新瀏覽次數
+        .update({
+          viewCounts: restaurant.viewCounts + 1,
+        })
+        .then(restaurant => {
+          return res.render('restaurant', {
+            restaurant: restaurant,
+            getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
+          })
+        })
     })
   },
 
@@ -83,10 +90,6 @@ let restController = {
     const restaurant = await Restaurant.findByPk(req.params.id, {
       include: [Category, Comment],
     })
-    console.log(restaurant.name)
-    console.log(restaurant.Category.name)
-    console.log(restaurant.Comments[0])
-    console.log(restaurant.Comments.length)
     res.render('restaurantDashboard', { restaurant })
   },
 }
