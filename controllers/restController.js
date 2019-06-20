@@ -51,21 +51,16 @@ let restController = {
       })
     })
   },
-  getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, {
+  getRestaurant: async (req, res) => {
+    const restaurant = await Restaurant.findByPk(req.params.id, {
       include: [Category, { model: Comment, include: [User] }],
-    }).then(restaurant => {
-      restaurant
-        // 更新瀏覽次數
-        .update({
-          viewCounts: restaurant.viewCounts + 1,
-        })
-        .then(restaurant => {
-          return res.render('restaurant', {
-            restaurant: restaurant,
-            getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
-          })
-        })
+    })
+    // 更新瀏覽次數
+    restaurant.increment('viewCounts', { by: 1 })
+
+    return res.render('restaurant', {
+      restaurant: restaurant,
+      getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
     })
   },
 

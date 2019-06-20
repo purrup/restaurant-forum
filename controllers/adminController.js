@@ -121,7 +121,7 @@ const adminController = {
             address: req.body.address,
             opening_hours: req.body.opening_hours,
             description: req.body.description,
-            image: restaurant.image,
+            image: null,
             CategoryId: req.body.categoryId,
           })
           .then(restaurant => {
