@@ -57,14 +57,21 @@ let restController = {
   },
   getRestaurant: async (req, res) => {
     const restaurant = await Restaurant.findByPk(req.params.id, {
-      include: [Category, { model: Comment, include: [User] }],
+      include: [
+        Category,
+        { model: User, as: 'FavoritedUsers' },
+        { model: Comment, include: [User] },
+      ],
     })
     // 更新瀏覽次數
     restaurant.increment('viewCounts', { by: 1 })
-
+    const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(
+      req.user.id
+    )
     return res.render('restaurant', {
       restaurant: restaurant,
       getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
+      isFavorited: isFavorited,
     })
   },
 

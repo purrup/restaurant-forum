@@ -20,6 +20,12 @@ block body
       br
       a(href=`/restaurant/${restaurant.id}/dashboard`)
         button.btn.btn-md.btn-primary(type='button') Dashboard
+      if isFavorited
+        form(action=`/favorite/${restaurant.id}?_method=DELETE`, method='POST',style="display: contents")
+          button.btn.btn-danger.ml-3(type='submit') 移除最愛
+      else
+        form(action=`/favorite/${restaurant.id}`, method='POST',style="display: contents")
+          button.btn.btn-primary.ml-3(type='submit') 加到最愛
     hr
   br
   br
