@@ -41,6 +41,7 @@ let restController = {
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(
           r.id
         ),
+        isLiked: req.user.LikedRestaurants.map(d => d.id).includes(r.id),
       }))
       Category.findAll().then(categories => {
         return res.render('restaurants', {
@@ -60,19 +61,28 @@ let restController = {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
+        { model: User, as: 'LikedByUsers' },
         { model: Comment, include: [User] },
       ],
     })
-    // 更新瀏覽次數
-    restaurant.increment('viewCounts', { by: 1 })
-    const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(
-      req.user.id
-    )
-    return res.render('restaurant', {
-      restaurant: restaurant,
-      getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
-      isFavorited: isFavorited,
-    })
+    try {
+      // 更新瀏覽次數
+      restaurant.increment('viewCounts', { by: 1 })
+      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(
+        req.user.id
+      )
+      const isLiked = restaurant.LikedByUsers.map(d => d.id).includes(
+        req.user.id
+      )
+      return res.render('restaurant', {
+        restaurant: restaurant,
+        getCreateTimeFromNow: getCreateTimeFromNow, //把function傳到前端頁面去用
+        isFavorited: isFavorited,
+        isLiked: isLiked,
+      })
+    } catch (err) {
+      console.log(err)
+    }
   },
 
   getFeeds: async (req, res) => {
