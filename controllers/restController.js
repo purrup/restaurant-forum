@@ -37,6 +37,10 @@ let restController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
+        //取出使用者有收藏的餐廳，並轉為id儲存，包含餐廳id的話回傳true
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(
+          r.id
+        ),
       }))
       Category.findAll().then(categories => {
         return res.render('restaurants', {
