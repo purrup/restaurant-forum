@@ -1,5 +1,5 @@
 const db = require('../models')
-const Category = db.Category
+const { Category } = db
 let categoryController = {
   getCategories: (req, res) => {
     return Category.findAll().then(categories => {
