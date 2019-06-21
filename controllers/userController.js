@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const { Favorite, Like, Restaurant, Comment, User } = db
+const { Favorite, Like, Restaurant, Comment, User, Followship } = db
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -151,17 +151,14 @@ let userController = {
     }).then(() => res.redirect('back'))
   },
 
-  removeLike: (req, res) => {
-    return Like.findOne({
+  removeLike: async (req, res) => {
+    const like = await Like.findOne({
       where: {
         UserId: req.user.id,
         RestaurantId: req.params.restaurantId,
       },
     })
-      .then(like => {
-        like.destroy()
-      })
-      .then(() => res.redirect('back'))
+    like.destroy().then(() => res.redirect('back'))
   },
   getTopUser: (req, res) => {
     // 撈出所有 User 與 followers 資料
@@ -180,6 +177,28 @@ let userController = {
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('topUser', { users: users })
     })
+  },
+  addFollowing: (req, res) => {
+    if (Number(req.params.userId) === req.user.id) {
+      req.flash('error_messages', 'Sorry, 不能追蹤自己喔')
+      return res.redirect('back')
+    }
+    Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId,
+    }).then(followship => {
+      return res.redirect('back')
+    })
+  },
+
+  removeFollowing: async (req, res) => {
+    const followship = await Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId,
+      },
+    })
+    followship.destroy().then(() => res.redirect('back'))
   },
 }
 
