@@ -23,6 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedRestaurants',
     })
+    //找出user被哪些人追蹤
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followingId',
+      as: 'Followers',
+    })
+    //找出user的追蹤名單
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings',
+    })
   }
 
   return User
