@@ -64,27 +64,20 @@ let userController = {
         { model: User, as: 'Followers' },
       ],
     })
-    // console.log(user)
+    const FavoritedRestaurants = user.FavoritedRestaurants
+    const followers = user.Followers
+    const followings = user.Followings
     try {
       //移除重複餐廳
-      let restaurants = []
-      // 把每個Restaurant放進restaurants這個arr以便前端存取
-      user.Comments.forEach(comment => {
-        restaurants.push(comment.Restaurant)
-      })
-      // 建立set容器
-      const set = new Set()
-      // 如果item.id沒有在set裡(true)，就加進set裡，且filter會把return true的內容（也就是restaurant）回傳進results
-      const results = restaurants.filter(item =>
-        !set.has(item.id) ? set.add(item.id) : false
-      )
-
-      const FavoritedRestaurants = user.FavoritedRestaurants
-      const followers = user.Followers
-      const followings = user.Followings
+      let map = user.Comments.reduce((map, { Restaurant }) => {
+        if (Restaurant && !map.has(Restaurant.id)) {
+          map.set(Restaurant.id, Restaurant)
+        }
+        return map
+      }, new Map())
       return res.render('user', {
         profile: user,
-        restaurants: results,
+        restaurants: [...map.values()],
         FavoritedRestaurants,
         followers,
         followings,
