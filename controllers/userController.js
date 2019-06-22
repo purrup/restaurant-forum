@@ -48,29 +48,50 @@ let userController = {
     res.redirect('/signin')
   },
 
-  getUser: (req, res) => {
-    console.log('user.id : ', req.user.id)
-    console.log('req.params.id : ', req.params.id)
+  getUser: async (req, res) => {
     //透過userId找到對應的comments，再把Restaurant include進comments
-    return User.findByPk(req.params.id, {
-      include: [{ model: Comment, include: [Restaurant] }],
-    }).then(user => {
+    const user = await User.findByPk(req.params.id, {
+      include: [
+        //評論過的餐廳
+        { model: Comment, include: [Restaurant] },
+        //收藏過的餐廳
+        {
+          model: Restaurant,
+          as: 'FavoritedRestaurants',
+        },
+        //追蹤以及被追蹤
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+      ],
+    })
+    // console.log(user)
+    try {
+      //移除重複餐廳
       let restaurants = []
       // 把每個Restaurant放進restaurants這個arr以便前端存取
       user.Comments.forEach(comment => {
         restaurants.push(comment.Restaurant)
       })
-      //建立set容器
+      // 建立set容器
       const set = new Set()
-      //如果item.id沒有在set裡(true)，就加進set裡，且filter會把return true的內容（也就是restaurant）回傳進results
+      // 如果item.id沒有在set裡(true)，就加進set裡，且filter會把return true的內容（也就是restaurant）回傳進results
       const results = restaurants.filter(item =>
         !set.has(item.id) ? set.add(item.id) : false
       )
+
+      const FavoritedRestaurants = user.FavoritedRestaurants
+      const followers = user.Followers
+      const followings = user.Followings
       return res.render('user', {
         profile: user,
         restaurants: results,
+        FavoritedRestaurants,
+        followers,
+        followings,
       })
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
   editUser: (req, res) => {
     User.findByPk(req.params.id).then(user => {

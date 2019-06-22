@@ -10,7 +10,10 @@ block body
     .col-md-8.my-3
       h3 #{profile.name}
       h5.my-4 #{profile.email}
-      h3 已評論 #{restaurants.length} 間餐廳
+      h6 已評論 #{restaurants.length} 間餐廳
+      h6 已收藏 #{FavoritedRestaurants.length} 間餐廳
+      h6 #{followers.length} followers
+      h6 #{followings.length} following
       br
       br
       a(href=`/users/${profile.id}/edit`)
@@ -18,12 +21,36 @@ block body
 
   br
   br
-  .card.border
-    h5.card-header 已評論 #{restaurants.length} 間餐廳
-    .d-flex.flex.row.justify-content-star.mx-3
-      each restaurant in restaurants
-        a(href=`/restaurants/${restaurant.id}`)
-          img.m-3(src=`${restaurant.image}`, style='height: 100px; width: 100px;')
+  .row.mb-4
+    .col-5
+      .card.border
+        h5.card-header #{followers.length} followers
+        .d-flex.flex.row.justify-content-star.mx-3
+          each follower in followers
+            a(href=`/users/${follower.id}`)
+              img.m-3(src=`${follower.image}`, style='height: 100px; width: 100px;')
+    .col-7
+      .card.border
+        h5.card-header 已評論 #{restaurants.length} 間餐廳
+        .d-flex.flex.row.justify-content-star.mx-3(style='overflow-x: scroll; height:270px')
+          each restaurant in restaurants
+            a(href=`/restaurants/${restaurant.id}`)
+              img.m-3(src=`${restaurant.image}`, style='height: 100px; width: 100px;')
+  .row
+    .col-5
+      .card.border
+        h5.card-header #{followings.length} following
+        .d-flex.flex.row.justify-content-star.mx-3
+          each following in followings
+            a(href=`/users/${following.id}`)
+              img.m-3(src=`${following.image}`, style='height: 100px; width: 100px;')
+    .col-7
+      .card.border
+        h5.card-header 已收藏 #{FavoritedRestaurants.length} 間餐廳
+        .d-flex.flex.row.justify-content-star.mx-3
+          each FavoritedRestaurant in FavoritedRestaurants
+            a(href=`/restaurants/${FavoritedRestaurant.id}`)
+              img.m-3(src=`${FavoritedRestaurant.image}`, style='height: 100px; width: 100px;')
 
 
     
