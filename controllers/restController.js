@@ -106,5 +106,27 @@ let restController = {
     })
     res.render('restaurantDashboard', { restaurant })
   },
+  getTopRestaurant: async (req, res) => {
+    let restaurants = await Restaurant.findAll({
+      include: [{ model: User, as: 'FavoritedUsers' }],
+    })
+    try {
+      restaurants = restaurants
+        .map(restaurant => ({
+          ...restaurant.dataValues,
+          FavoritedCount: restaurant.FavoritedUsers.length,
+          isFavorited: restaurant.FavoritedUsers.map(d => d.id).includes(
+            req.user.id
+          ),
+        }))
+        .filter(restaurant => restaurant.FavoritedCount > 0)
+        .sort((a, b) => b.FavoritedCount - a.FavoritedCount)
+        .slice(0, 10)
+
+      return res.render('topRestaurant', { restaurants })
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }
 module.exports = restController

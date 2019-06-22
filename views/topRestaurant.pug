@@ -1,0 +1,38 @@
+extends layouts/main
+block body
+  ul.nav.nav-tabs
+    li.nav-item
+      a.nav-link(href='/restaurants') 首頁
+    li.nav-item
+      a.nav-link(href='/restaurants/feeds') 最新動態
+    li.nav-item
+      a.nav-link.active(href='/restaurants/top') TOP10 人氣餐廳
+    li.nav-item
+      a.nav-link(href='/users/top') 美食達人
+  br
+  br
+  h1 人氣餐廳
+  hr
+  .container
+    .row.align-items-center.flex-column(style='text-align: center;')
+      each restaurant in restaurants
+        .col-md-6.mb-4.border.rounded.p-0.flex-row.d-flex.justify-content-start
+          .col.p-0.d-flex.justify-content-start
+            a.mr-4(href=`/restaurants/${restaurant.id}`)
+                img(src=`${restaurant.image}`, width='100%', height='180px')
+          .col.p-0.mt-2
+            .col.d-flex.flex-column.align-items-start
+              h4 #{restaurant.name}
+              span.badge.badge-secondary 收藏數：#{restaurant.FavoritedCount}
+              p #{restaurant.description}
+              br
+            .col.d-flex.flex-row.mb-3
+              a(href=`/restaurants/${restaurant.id}`)
+                button.btn.btn-primary.mr-3(type='button') Show        
+              if restaurant.isFavorited
+                form(action=`/favorite/${restaurant.id}?_method=DELETE`, method='POST', style='display: contents;')
+                  button.btn.btn-danger(type='submit') 移除最愛
+              else
+                form(action=`/favorite/${restaurant.id}`, method='POST', style='display: contents;')
+                  button.btn.btn-primary(type='submit') 收藏
+            
