@@ -55,15 +55,15 @@ let restController = {
     })
   },
   getRestaurant: async (req, res) => {
-    const restaurant = await Restaurant.findByPk(req.params.id, {
-      include: [
-        Category,
-        { model: User, as: 'FavoritedUsers' },
-        { model: User, as: 'LikedByUsers' },
-        { model: Comment, include: [User] },
-      ],
-    })
     try {
+      const restaurant = await Restaurant.findByPk(req.params.id, {
+        include: [
+          Category,
+          { model: User, as: 'FavoritedUsers' },
+          { model: User, as: 'LikedByUsers' },
+          { model: Comment, include: [User] },
+        ],
+      })
       // 更新瀏覽次數
       restaurant.increment('viewCounts', { by: 1 })
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(
@@ -84,33 +84,41 @@ let restController = {
   },
 
   getFeeds: async (req, res) => {
-    const restaurants = await Restaurant.findAll({
-      limit: 10,
-      order: [['createdAt', 'DESC']],
-      include: [Category],
-    })
-    const comments = await Comment.findAll({
-      limit: 10,
-      order: [['createdAt', 'DESC']],
-      include: [User, Restaurant],
-    })
-    res.render('feeds', {
-      restaurants: restaurants,
-      comments: comments,
-      getCreateTimeFromNow: getCreateTimeFromNow,
-    })
+    try {
+      const restaurants = await Restaurant.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [Category],
+      })
+      const comments = await Comment.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [User, Restaurant],
+      })
+      res.render('feeds', {
+        restaurants: restaurants,
+        comments: comments,
+        getCreateTimeFromNow: getCreateTimeFromNow,
+      })
+    } catch (err) {
+      console.log(err)
+    }
   },
   getDashboard: async (req, res) => {
-    const restaurant = await Restaurant.findByPk(req.params.id, {
-      include: [Category, Comment],
-    })
-    res.render('restaurantDashboard', { restaurant })
+    try {
+      const restaurant = await Restaurant.findByPk(req.params.id, {
+        include: [Category, Comment],
+      })
+      res.render('restaurantDashboard', { restaurant })
+    } catch (err) {
+      console.log(err)
+    }
   },
   getTopRestaurant: async (req, res) => {
-    let restaurants = await Restaurant.findAll({
-      include: [{ model: User, as: 'FavoritedUsers' }],
-    })
     try {
+      let restaurants = await Restaurant.findAll({
+        include: [{ model: User, as: 'FavoritedUsers' }],
+      })
       restaurants = restaurants
         .map(restaurant => ({
           ...restaurant.dataValues,

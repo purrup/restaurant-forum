@@ -49,25 +49,25 @@ let userController = {
   },
 
   getUser: async (req, res) => {
-    //透過userId找到對應的comments，再把Restaurant include進comments
-    const user = await User.findByPk(req.params.id, {
-      include: [
-        //評論過的餐廳
-        { model: Comment, include: [Restaurant] },
-        //收藏過的餐廳
-        {
-          model: Restaurant,
-          as: 'FavoritedRestaurants',
-        },
-        //追蹤以及被追蹤
-        { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' },
-      ],
-    })
-    const FavoritedRestaurants = user.FavoritedRestaurants
-    const followers = user.Followers
-    const followings = user.Followings
     try {
+      //透過userId找到對應的comments，再把Restaurant include進comments
+      const user = await User.findByPk(req.params.id, {
+        include: [
+          //評論過的餐廳
+          { model: Comment, include: [Restaurant] },
+          //收藏過的餐廳
+          {
+            model: Restaurant,
+            as: 'FavoritedRestaurants',
+          },
+          //追蹤以及被追蹤
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+        ],
+      })
+      const FavoritedRestaurants = user.FavoritedRestaurants
+      const followers = user.Followers
+      const followings = user.Followings
       //移除重複餐廳
       let map = user.Comments.reduce((map, { Restaurant }) => {
         if (Restaurant && !map.has(Restaurant.id)) {
@@ -166,13 +166,17 @@ let userController = {
   },
 
   removeLike: async (req, res) => {
-    const like = await Like.findOne({
-      where: {
-        UserId: req.user.id,
-        RestaurantId: req.params.restaurantId,
-      },
-    })
-    like.destroy().then(() => res.redirect('back'))
+    try {
+      const like = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId,
+        },
+      })
+      like.destroy().then(() => res.redirect('back'))
+    } catch (err) {
+      console.log(err)
+    }
   },
   getTopUser: (req, res) => {
     // 撈出所有 User 與 followers 資料
@@ -206,13 +210,17 @@ let userController = {
   },
 
   removeFollowing: async (req, res) => {
-    const followship = await Followship.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.userId,
-      },
-    })
-    followship.destroy().then(() => res.redirect('back'))
+    try {
+      const followship = await Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId,
+        },
+      })
+      followship.destroy().then(() => res.redirect('back'))
+    } catch (err) {
+      console.log(err)
+    }
   },
 }
 
