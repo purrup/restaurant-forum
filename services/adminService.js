@@ -12,6 +12,13 @@ const adminService = {
       cb({ restaurants })
     })
   },
+  getRestaurant: (req, res, cb) => {
+    return Restaurant.findByPk(req.params.id, { include: [Category] }).then(
+      restaurant => {
+        cb({ restaurant })
+      }
+    )
+  },
 }
 
 module.exports = adminService
