@@ -60,12 +60,12 @@ router.get(
   adminController.editRestaurant
 )
 
-// router.put(
-//   '/admin/restaurants/:id',
-//   upload.single('image'),
-//   authenticatedAdmin,
-//   adminController.putRestaurant
-// )
+router.put(
+  '/admin/restaurants/:id',
+  upload.single('image'),
+  authenticatedAdmin,
+  adminController.putRestaurant
+)
 
 router.delete(
   '/admin/restaurants/:id',
