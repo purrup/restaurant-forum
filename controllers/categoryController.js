@@ -4,13 +4,7 @@ const adminService = require('../services/adminService')
 
 let categoryController = {
   getCategories: (req, res) => {
-    adminService.getCategories(req, res, (data) => {
-      if (req.params.id) {
-          res.render('admin/categories', data)
-      } else {
-        return res.render('admin/categories', data)
-      }
-    })
+    adminService.getCategories(req, res, (data) => { res.render('admin/categories', data) })
   },
   postCategory: (req, res) => {
     if (!req.body.name) {

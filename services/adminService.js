@@ -19,20 +19,6 @@ const adminService = {
       }
     )
   },
-  getCategories: (req, res, cb) => {
-    return Category.findAll().then(categories => {
-      if (req.params.id) {
-        Category.findByPk(req.params.id).then(category => {
-          cb({
-            categories: categories,
-            category: category,
-          })
-        })
-      } else {
-        return cb({ categories: categories })
-      }
-    })
-  },
   postRestaurant: (req, res, cb) => {
     if (!req.body.name) {
       return cb({ status: 'error', message: "name didn't exist"})
@@ -127,6 +113,31 @@ const adminService = {
             cb({ status: 'success', message: '' })
           })
       })
+  },
+  getCategories: (req, res, cb) => {
+    return Category.findAll().then(categories => {
+      if (req.params.id) {
+        Category.findByPk(req.params.id).then(category => {
+          cb({
+            categories: categories,
+            category: category,
+          })
+        })
+      } else {
+        return cb({ categories: categories })
+      }
+    })
+  },
+  postCategory:(req, res, cb) => {
+    if (!req.body.name) {
+      return cb({ status: 'error', message: "name didn't exist"})
+    } else {
+      return Category.create({
+        name: req.body.name,
+      }).then(category => {
+        cb({ status: 'success', message: 'category was successfully created' })
+      })
+    }
   }
 }
 
