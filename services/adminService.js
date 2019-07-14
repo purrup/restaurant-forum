@@ -63,8 +63,6 @@ const adminService = {
   },
   putRestaurant: (req, res, cb) => {
     if (!req.body.name) {
-      // req.flash('error_messages', "name didn't exist")
-      // return res.redirect('back')
       return cb({ status: 'error', message: "name didn't exist"})
     }
 
@@ -138,7 +136,18 @@ const adminService = {
         cb({ status: 'success', message: 'category was successfully created' })
       })
     }
-  }
+  },
+  putCategory: (req, res, cb) => {
+    if (!req.body.name) {
+      cb({ status: 'error', message: "name didn't exist"})
+      } else {
+        return Category.findByPk(req.params.id).then(category => {
+          category.update(req.body).then(category => {
+            cb({ status: 'success', message: 'Category was successfully updated' })
+          })
+        })
+      }
+  },
 }
 
 module.exports = adminService
